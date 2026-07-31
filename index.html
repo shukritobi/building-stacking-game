@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <meta name="theme-color" content="#07142e" />
-  <meta name="description" content="Skyline Stack, a polished mobile-first building stacking game." />
+  <meta name="description" content="Skyline Stack, a polished mobile-first apartment stacking game." />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Skyline Stack" />
@@ -12,11 +12,11 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon.svg" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <main id="app" aria-label="Skyline Stack game">
-    <canvas id="gameCanvas" aria-label="Building stacking game canvas"></canvas>
+    <canvas id="gameCanvas" aria-label="Apartment stacking game canvas"></canvas>
 
     <section id="hud" class="hud hidden" aria-live="polite">
       <div class="hud-top">
@@ -60,6 +60,7 @@
       </div>
 
       <div class="home-actions">
+        <button id="continueButton" class="primary-button" type="button" style="display:none">CONTINUE</button>
         <button id="playButton" class="primary-button" type="button">PLAY CLASSIC</button>
         <button id="timeAttackButton" class="secondary-button" type="button">60s TIME ATTACK</button>
         <div class="mini-actions">
@@ -80,11 +81,11 @@
         <p class="eyebrow">QUICK GUIDE</p>
         <h2>Stack it clean</h2>
         <div class="instruction-grid">
-          <article><span class="instruction-number">1</span><h3>Tap to drop</h3><p>Release the building while it swings under the crane.</p></article>
-          <article><span class="instruction-number">2</span><h3>Aim for perfect</h3><p>Center each floor to build combos and earn power-ups.</p></article>
-          <article><span class="instruction-number">3</span><h3>Protect the tower</h3><p>Use slow time or a stabilizer when the city gets wild.</p></article>
+          <article><span class="instruction-number">1</span><h3>Tap to drop</h3><p>Release the apartment block while it swings under the crane.</p></article>
+          <article><span class="instruction-number">2</span><h3>Aim for perfect</h3><p>Centre each block to build combos and keep the tower steady.</p></article>
+          <article><span class="instruction-number">3</span><h3>Control the wobble</h3><p>The taller the tower gets, the harder it sways. Use the stabilizer when needed.</p></article>
         </div>
-        <p class="tip">Tip: You can also press Space or Enter on desktop.</p>
+        <p class="tip">Your active tower is saved automatically when you leave or close the browser.</p>
         <button class="primary-button" data-close="howToScreen">GOT IT</button>
       </div>
     </section>
@@ -92,7 +93,7 @@
     <section id="pauseScreen" class="screen modal-screen" aria-modal="true" role="dialog">
       <div class="panel compact-panel">
         <p class="eyebrow">GAME PAUSED</p>
-        <h2>Take a breather</h2>
+        <h2>Your tower is saved</h2>
         <button id="resumeButton" class="primary-button" type="button">RESUME</button>
         <button id="restartFromPauseButton" class="secondary-button" type="button">RESTART</button>
         <button id="quitButton" class="text-button wide" type="button">QUIT TO MENU</button>
@@ -126,9 +127,10 @@
   </main>
 
   <noscript>This game needs JavaScript enabled.</noscript>
-  <script src="core.js" defer></script>
-  <script src="gameplay.js" defer></script>
-  <script src="render.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="core.js?v=2" defer></script>
+  <script src="gameplay.js?v=2" defer></script>
+  <script src="render.js?v=2" defer></script>
+  <script src="app.js?v=2" defer></script>
+  <script src="enhancements.js?v=2" defer></script>
 </body>
 </html>
