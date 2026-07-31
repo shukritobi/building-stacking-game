@@ -1,4 +1,4 @@
-const CACHE_NAME = 'skyline-stack-v2';
+const CACHE_NAME = 'skyline-stack-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const ASSETS = [
   './render.js',
   './app.js',
   './enhancements.js',
+  './hotfix.js',
   './manifest.webmanifest',
   './icons/icon.svg'
 ];
@@ -32,7 +33,7 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const requestUrl = new URL(event.request.url);
   const isNavigation = event.request.mode === 'navigate';
-  const isGameCode = /\/(core|gameplay|render|app|enhancements)\.js$/.test(requestUrl.pathname) || requestUrl.pathname.endsWith('/styles.css');
+  const isGameCode = /\/(core|gameplay|render|app|enhancements|hotfix)\.js$/.test(requestUrl.pathname) || requestUrl.pathname.endsWith('/styles.css');
 
   if (isNavigation || isGameCode) {
     event.respondWith(
