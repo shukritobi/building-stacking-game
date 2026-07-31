@@ -1,0 +1,20 @@
+{
+  "name": "Skyline Stack",
+  "short_name": "Skyline Stack",
+  "description": "A polished mobile-first building stacking game.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#07142e",
+  "theme_color": "#07142e",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
