@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#07142e" />
+  <meta name="description" content="Skyline Stack, a polished mobile-first building stacking game." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Skyline Stack" />
+  <title>Skyline Stack</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="app" aria-label="Skyline Stack game">
+    <canvas id="gameCanvas" aria-label="Building stacking game canvas"></canvas>
+
+    <section id="hud" class="hud hidden" aria-live="polite">
+      <div class="hud-top">
+        <div class="hud-card score-card">
+          <span class="hud-label">SCORE</span>
+          <strong id="scoreValue">0</strong>
+        </div>
+        <div class="hud-card floors-card">
+          <span class="hud-label">FLOORS</span>
+          <strong id="floorsValue">0</strong>
+        </div>
+        <button id="pauseButton" class="icon-button" type="button" aria-label="Pause game">Ⅱ</button>
+      </div>
+
+      <div class="hud-bottom">
+        <div class="lives-panel" aria-label="Lives remaining">
+          <span id="life1" class="life active">●</span>
+          <span id="life2" class="life active">●</span>
+          <span id="life3" class="life active">●</span>
+        </div>
+        <div class="combo-panel">
+          <span id="comboLabel">COMBO</span>
+          <strong id="comboValue">x1</strong>
+        </div>
+        <div class="power-panel">
+          <button id="slowPower" class="power-button" type="button" aria-label="Use slow time power-up">
+            <span class="power-icon">◷</span><span id="slowCount">0</span>
+          </button>
+          <button id="stabilizePower" class="power-button" type="button" aria-label="Use stabilizer power-up">
+            <span class="power-icon">◇</span><span id="stabilizeCount">0</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="homeScreen" class="screen active">
+      <div class="brand-lockup">
+        <p class="eyebrow">BUILD ABOVE THE CLOUDS</p>
+        <h1>SKYLINE<br><span>STACK</span></h1>
+        <p class="tagline">Time the drop. Balance the tower. Own the skyline.</p>
+      </div>
+
+      <div class="home-actions">
+        <button id="playButton" class="primary-button" type="button">PLAY CLASSIC</button>
+        <button id="timeAttackButton" class="secondary-button" type="button">60s TIME ATTACK</button>
+        <div class="mini-actions">
+          <button id="howToButton" class="text-button" type="button">HOW TO PLAY</button>
+          <button id="soundButton" class="text-button" type="button">SOUND: ON</button>
+        </div>
+      </div>
+
+      <div class="home-stats">
+        <div><span>BEST</span><strong id="bestScoreHome">0</strong></div>
+        <div><span>TALLEST</span><strong id="bestFloorsHome">0</strong></div>
+      </div>
+    </section>
+
+    <section id="howToScreen" class="screen modal-screen" aria-modal="true" role="dialog">
+      <div class="panel">
+        <button class="close-button" data-close="howToScreen" aria-label="Close instructions">×</button>
+        <p class="eyebrow">QUICK GUIDE</p>
+        <h2>Stack it clean</h2>
+        <div class="instruction-grid">
+          <article><span class="instruction-number">1</span><h3>Tap to drop</h3><p>Release the building while it swings under the crane.</p></article>
+          <article><span class="instruction-number">2</span><h3>Aim for perfect</h3><p>Center each floor to build combos and earn power-ups.</p></article>
+          <article><span class="instruction-number">3</span><h3>Protect the tower</h3><p>Use slow time or a stabilizer when the city gets wild.</p></article>
+        </div>
+        <p class="tip">Tip: You can also press Space or Enter on desktop.</p>
+        <button class="primary-button" data-close="howToScreen">GOT IT</button>
+      </div>
+    </section>
+
+    <section id="pauseScreen" class="screen modal-screen" aria-modal="true" role="dialog">
+      <div class="panel compact-panel">
+        <p class="eyebrow">GAME PAUSED</p>
+        <h2>Take a breather</h2>
+        <button id="resumeButton" class="primary-button" type="button">RESUME</button>
+        <button id="restartFromPauseButton" class="secondary-button" type="button">RESTART</button>
+        <button id="quitButton" class="text-button wide" type="button">QUIT TO MENU</button>
+      </div>
+    </section>
+
+    <section id="countdownScreen" class="screen countdown-screen" aria-live="assertive">
+      <div id="countdownValue">3</div>
+      <p>TAP ANYWHERE TO DROP</p>
+    </section>
+
+    <section id="gameOverScreen" class="screen modal-screen" aria-modal="true" role="dialog">
+      <div class="panel result-panel">
+        <p id="resultEyebrow" class="eyebrow">TOWER COMPLETE</p>
+        <h2 id="resultTitle">Nice skyline!</h2>
+        <div class="result-score"><span>SCORE</span><strong id="finalScore">0</strong></div>
+        <div class="result-grid">
+          <div><span>FLOORS</span><strong id="finalFloors">0</strong></div>
+          <div><span>BEST COMBO</span><strong id="finalCombo">x1</strong></div>
+          <div><span>PERFECTS</span><strong id="finalPerfects">0</strong></div>
+        </div>
+        <p id="newBestBadge" class="new-best hidden">NEW HIGH SCORE</p>
+        <button id="playAgainButton" class="primary-button" type="button">PLAY AGAIN</button>
+        <button id="shareButton" class="secondary-button" type="button">SHARE SCORE</button>
+        <button id="menuButton" class="text-button wide" type="button">BACK TO MENU</button>
+      </div>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="rotateHint" class="rotate-hint">Best played in portrait mode</div>
+  </main>
+
+  <noscript>This game needs JavaScript enabled.</noscript>
+  <script src="game.js" defer></script>
+</body>
+</html>
