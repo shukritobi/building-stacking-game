@@ -1,4 +1,4 @@
-const CACHE_NAME = 'skyline-stack-v1';
+const CACHE_NAME = 'skyline-stack-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -7,12 +7,17 @@ const ASSETS = [
   './gameplay.js',
   './render.js',
   './app.js',
+  './enhancements.js',
   './manifest.webmanifest',
   './icons/icon.svg'
 ];
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(ASSETS))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', event => {
@@ -25,6 +30,23 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  const requestUrl = new URL(event.request.url);
+  const isNavigation = event.request.mode === 'navigate';
+  const isGameCode = /\/(core|gameplay|render|app|enhancements)\.js$/.test(requestUrl.pathname) || requestUrl.pathname.endsWith('/styles.css');
+
+  if (isNavigation || isGameCode) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then(cached => cached || caches.match('./index.html')))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
       const copy = response.clone();
